@@ -7,13 +7,11 @@
 
 namespace Larva\Whois;
 
-use Larva\Support\Exception\Exception;
-
 /**
  * Class IllegalDomainException
  * @author Tongle Xu <xutongle@gmail.com>
  */
-class IllegalDomainException extends Exception
+class IllegalDomainException extends \Exception
 {
 
 }
