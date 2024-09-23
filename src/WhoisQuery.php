@@ -28,7 +28,7 @@ class WhoisQuery
      *
      * @param string $host
      * @return ResolvedDomainName
-     * @throws IllegalDomainException
+     * @throws IllegalDomainException|\Pdp\CannotProcessHost
      */
     public function parseDomain(string $host): ResolvedDomainName
     {
@@ -48,13 +48,26 @@ class WhoisQuery
     }
 
     /**
+     * 获取域名
+     * @param  string  $domain
+     * @return string
+     * @throws IllegalDomainException
+     * @throws \Pdp\CannotProcessHost
+     */
+    public function getDomain(string $hostName): string
+    {
+        $domain = $this->parseDomain($hostName);
+        return $domain->registrableDomain()->toString();
+    }
+
+    /**
      * 查询原始 Whois
      * @param string $domain
      * @return string
      * @throws ConnectionException
      * @throws ServerMismatchException
      * @throws WhoisException
-     * @throws IllegalDomainException
+     * @throws IllegalDomainException|\Pdp\CannotProcessHost
      */
     public function lookupRaw(string $domain): string
     {
@@ -70,9 +83,9 @@ class WhoisQuery
      * @throws ConnectionException
      * @throws ServerMismatchException
      * @throws WhoisException
-     * @throws IllegalDomainException
+     * @throws IllegalDomainException|\Pdp\CannotProcessHost
      */
-    public function lookupInfo($domain): TldInfo
+    public function lookupInfo(string|ResolvedDomainName $domain): TldInfo
     {
         $whois = Factory::get()->createWhois();
         if (!$domain instanceof ResolvedDomainName) {
@@ -88,7 +101,7 @@ class WhoisQuery
      * @throws ConnectionException
      * @throws IllegalDomainException
      * @throws ServerMismatchException
-     * @throws WhoisException
+     * @throws WhoisException|\Pdp\CannotProcessHost
      */
     public function lookup(string $domain): array
     {

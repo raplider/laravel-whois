@@ -15,6 +15,7 @@ use Iodev\Whois\Modules\Tld\TldInfo;
  * @method static array lookup(string $domain)
  * @method static string lookupRaw(string $domain)
  * @method static TldInfo lookupInfo(string $domain)
+ * @method static string getDomain(string $hostName)
  * @mixin WhoisQuery
  *
  * @author Tongle Xu <xutongle@gmail.com>
