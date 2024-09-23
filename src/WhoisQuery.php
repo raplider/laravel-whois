@@ -13,6 +13,7 @@ use Iodev\Whois\Exceptions\ServerMismatchException;
 use Iodev\Whois\Exceptions\WhoisException;
 use Iodev\Whois\Factory;
 use Iodev\Whois\Modules\Tld\TldInfo;
+use Pdp\CannotProcessHost;
 use Pdp\Domain as WhoisDomain;
 use Pdp\ResolvedDomainName;
 use Pdp\Rules;
@@ -78,14 +79,15 @@ class WhoisQuery
 
     /**
      * 查询 Whois Info
-     * @param string|ResolvedDomainName $domain
-     * @return TldInfo
+     * @param  string|ResolvedDomainName  $domain
+     * @return TldInfo|null
      * @throws ConnectionException
+     * @throws IllegalDomainException
      * @throws ServerMismatchException
      * @throws WhoisException
-     * @throws IllegalDomainException|\Pdp\CannotProcessHost
+     * @throws CannotProcessHost
      */
-    public function lookupInfo(string|ResolvedDomainName $domain): TldInfo
+    public function lookupInfo(string|ResolvedDomainName $domain): ?TldInfo
     {
         $whois = Factory::get()->createWhois();
         if (!$domain instanceof ResolvedDomainName) {
