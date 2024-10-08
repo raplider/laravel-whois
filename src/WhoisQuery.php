@@ -105,9 +105,12 @@ class WhoisQuery
      * @throws ServerMismatchException
      * @throws WhoisException|\Pdp\CannotProcessHost
      */
-    public function lookup(string $domain): array
+    public function lookup(string $domain): ?array
     {
         $response = $this->lookupInfo($this->parseDomain($domain));
+        if(!$response) {
+            return null;
+        }
         return [
             'parser_type' => $response->parserType,
             'name' => $response->domainName,
